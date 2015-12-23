@@ -1,0 +1,15 @@
+{
+  "name": "sonosfetch",
+  "version": "1.0.0",
+  "description": "pulls images from sonos http api and uploads them for reading by geckoboard",
+  "main": "fetch.js",
+  "dependencies": {
+    "request": "^2.67.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
