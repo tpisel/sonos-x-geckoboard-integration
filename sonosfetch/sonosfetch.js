@@ -2,12 +2,12 @@
 var request = require ('request');
 var http = require('http');
 
-//geckoboard
+//geckoboard--add your details here:
 var widgetkey = 'yourwidgetkeyhere';
 var api_key = 'yourapikeyhere';
 var pushURL = 'https://push.geckoboard.com/v1/send/yourpushurlhere';
 
-//the http api url
+//reading state from the http-api server
 var httpoptions = {
 host: 'localhost',
 path: '/state',
@@ -32,12 +32,13 @@ sonosRead = function(response) {
     songTitle   = output.currentTrack.title;
     songArtist  = output.currentTrack.artist;
 
-    //text to display
+    //Message to Display on the Geckoboard
     displaytext = '<center>'+songArtist+'<br><h1><em>'+songTitle+'</em></h1></center>';
     if (output.playerState != 'PLAYING') {
       displaytext += '<br><center>PAUSED</center>';
     }
 
+    //Structure for JSON package
     message = {
       api_key: api_key,
       data: {
@@ -52,6 +53,7 @@ sonosRead = function(response) {
 
     console.log('the song playing is ' + songTitle);
 
+    //Wait until Sonos state has chance to be read before sending to board
     setTimeout(sendoff(), 2500);
   });
 }
@@ -63,10 +65,10 @@ callitup = function(){
 sendoff = function(){
   console.log(JSON.stringify(message));
   request.post(pushURL).form(JSON.stringify(message));
-  console.log('message sent');
+  console.log('JSON sent to Geckoboard');
 }
 
-//call repeatedly
+//call repeatedly to keep board up to date
 var keepRunning = setInterval(function() {callitup()},5000);
 
 //to end can use clearInterval(keepRunning)
